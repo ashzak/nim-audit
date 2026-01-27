@@ -194,36 +194,23 @@ class PolicyLinter:
     def _evaluate_rule(self, rule: Rule, context: dict[str, Any]) -> bool:
         """Evaluate a rule condition against context.
 
-        Uses a safe subset of Python for evaluation.
+        Uses a safe AST-based expression evaluator.
         """
-        # Simple expression evaluator
-        # In production, use a proper expression language
+        from nim_audit.utils.expression import safe_eval
 
         condition = rule.condition
 
-        # Handle common patterns
         try:
-            # Replace common patterns with Python equivalents
-            # This is a simplified evaluator - production would use AST
-
-            # Create a restricted namespace
-            namespace = {
-                "labels": context.get("labels", {}),
-                "env": context.get("env", {}),
-                "exposed_ports": context.get("exposed_ports", []),
-                "config": context.get("config", {}),
-                "any": any,
-                "all": all,
-                "len": len,
-                "str": str,
-                "int": int,
-                "re": re,
-            }
-
-            # Evaluate the condition
-            result = eval(condition, {"__builtins__": {}}, namespace)
+            # Use the safe expression evaluator
+            result = safe_eval(condition, context)
             return bool(result)
 
+        except ValueError as e:
+            # Log the error but don't fail - return True to avoid false positives
+            from nim_audit.utils.logging import get_logger
+            logger = get_logger("lint")
+            logger.warning(f"Failed to evaluate rule {rule.id}: {e}")
+            return True
         except Exception:
             # If evaluation fails, assume the rule passes
             # to avoid false positives
