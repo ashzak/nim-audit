@@ -45,6 +45,23 @@ from nim_audit.models.policy import (
     RuleSeverity,
 )
 from nim_audit.models.common import AuditError
+from nim_audit.models.env import (
+    Affect,
+    DiscoveredVar,
+    DiscoveryResult,
+    EnvDescribeVar,
+    EnvDiff,
+    EnvSurface,
+    Evidence,
+    Finding,
+    ImpactLevel as EnvImpactLevel,
+    ImpactMetric,
+    InteractionEdge,
+    LintResult as EnvLintResult,
+    Registry,
+    RegistryEntry,
+    Severity as EnvSeverity,
+)
 
 __all__ = [
     # Image
@@ -84,4 +101,20 @@ __all__ = [
     "RuleSeverity",
     # Common
     "AuditError",
+    # Env
+    "Affect",
+    "DiscoveredVar",
+    "DiscoveryResult",
+    "EnvDescribeVar",
+    "EnvDiff",
+    "EnvSurface",
+    "Evidence",
+    "Finding",
+    "EnvImpactLevel",
+    "ImpactMetric",
+    "InteractionEdge",
+    "EnvLintResult",
+    "Registry",
+    "RegistryEntry",
+    "EnvSeverity",
 ]

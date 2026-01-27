@@ -1,0 +1,6 @@
+schema_version: nim-audit/env-interactions/v1
+edges:
+  - var_a: NIM_TENSOR_PARALLEL_SIZE
+    var_b: NIM_PIPELINE_PARALLEL_SIZE
+    interaction_type: couples
+    description: "Parallelism settings interact; total GPU count and scheduling constraints depend on both."

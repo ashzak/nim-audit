@@ -3,7 +3,7 @@
 import typer
 from rich.console import Console
 
-from nim_audit.cli import diff, config, compat, lint, fingerprint, cluster
+from nim_audit.cli import diff, config, compat, lint, fingerprint, cluster, env
 
 app = typer.Typer(
     name="nim-audit",
@@ -21,6 +21,7 @@ app.command(name="compat")(compat.compat_cmd)
 app.command(name="lint")(lint.lint_cmd)
 app.add_typer(fingerprint.app, name="fingerprint")
 app.command(name="cluster")(cluster.cluster_cmd)
+app.add_typer(env.app, name="env")
 
 
 @app.callback()
@@ -39,6 +40,7 @@ def main(
     - [bold]lint[/bold]: Validate against enterprise policies
     - [bold]fingerprint[/bold]: Generate and compare behavioral signatures
     - [bold]cluster[/bold]: Scan Kubernetes cluster compatibility
+    - [bold]env[/bold]: Environment variable analysis tools
     """
     from nim_audit.utils.logging import configure_logging
 

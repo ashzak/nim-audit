@@ -1,0 +1,56 @@
+schema_version: nim-audit/env-registry/v1
+controlled_vocabulary:
+  metrics: [latency, throughput, memory, determinism, numerics, compatibility]
+  impacts: ["++", "+", "±", "-", "--", "none"]
+
+vars:
+  - name: NIM_LOG_LEVEL
+    type: enum
+    scope: service
+    precedence: env_file > runtime_params > image_default
+    default: INFO
+    affects:
+      - latency: "±"
+      - throughput: "±"
+      - determinism: none
+    failure_modes:
+      - "Debug logging can distort benchmarking and increase latency variance."
+    confidence: MED
+
+  - name: NIM_MAX_BATCH_SIZE
+    type: int
+    scope: runtime
+    precedence: env_file > runtime_params > image_default
+    default: "4"
+    affects:
+      - throughput: "+"
+      - latency: "±"
+      - memory: "++"
+    failure_modes:
+      - "Too high can trigger OOM (KV cache / activations)."
+    confidence: MED
+
+  - name: NIM_TENSOR_PARALLEL_SIZE
+    type: int
+    scope: runtime
+    precedence: env_file > runtime_params > image_default
+    default: "1"
+    affects:
+      - throughput: "+"
+      - latency: "-"
+      - memory: "+"
+      - compatibility: "-"
+    failure_modes:
+      - "TP>1 may require multi-GPU and compatible topology."
+    confidence: LOW
+
+  - name: NIM_PIPELINE_PARALLEL_SIZE
+    type: int
+    scope: runtime
+    precedence: env_file > runtime_params > image_default
+    default: "1"
+    affects:
+      - throughput: "+"
+      - latency: "-"
+      - compatibility: "-"
+    confidence: LOW
