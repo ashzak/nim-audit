@@ -10,7 +10,7 @@ readme = "README.md"
 license = "MIT"
 requires-python = ">=3.11"
 authors = [
-    { name = "nim-audit contributors" }
+    { name = "Ash S.", email = "ashzak@gmail.com" }
 ]
 keywords = ["nvidia", "nim", "container", "audit", "llm", "inference"]
 classifiers = [
@@ -52,10 +52,10 @@ dev = [
 nim-audit = "nim_audit.cli.main:app"
 
 [project.urls]
-Homepage = "https://github.com/nvidia/nim-audit"
-Documentation = "https://github.com/nvidia/nim-audit#readme"
-Repository = "https://github.com/nvidia/nim-audit"
-Issues = "https://github.com/nvidia/nim-audit/issues"
+Homepage = "https://github.com/ashzak/nim-audit"
+Documentation = "https://github.com/ashzak/nim-audit#readme"
+Repository = "https://github.com/ashzak/nim-audit"
+Issues = "https://github.com/ashzak/nim-audit/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/nim_audit"]
